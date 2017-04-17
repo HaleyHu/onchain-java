@@ -39,19 +39,25 @@ public abstract class Blockchain implements AutoCloseable
      *  产生每个区块的时间间隔
      */
     public static final Duration TIME_PER_BLOCK = Duration.ofSeconds(SECONDS_PER_BLOCK);
+	private static final String[] STANDBY_MINER_VALUE = new String[] {
+			"0327da12b5c40200e9f65569476bbff2218da4f32548ff43b6387ec1416a231ee8",
+			"026ce35b29147ad09e4afe4ec4a7319095f08198fa8babbe3c56e970b143528d22",
+			"0209e7fd41dfb5c2f8dc72eb30358ac100ea8c72da18847befe06eade68cebfcb9",
+			"039dafd8571a641058ccc832c5e2111ea39b09c0bde36050914384f7a48bce9bf9",
+			"038dddc06ce687677a53d54f096d2591ba2302068cf123c1f2d75c2dddc5425579",
+			"02d02b1873a0863cd042cc717da31cea0d7cf9db32b74d4c72c01b0011503e2e22",
+			"034ff5ceeac41acf22cd5ed2da17a6df4dd8358fcb2bfb1a43208ad0feaab2746b"
+		};
+
     /**
      *  后备记账人列表
      */
-    public static final ECPoint[] STANDBY_MINERS =
-    {
-        ECC.secp256r1.getCurve().decodePoint(Helper.hexToBytes("0327da12b5c40200e9f65569476bbff2218da4f32548ff43b6387ec1416a231ee8")),
-        ECC.secp256r1.getCurve().decodePoint(Helper.hexToBytes("026ce35b29147ad09e4afe4ec4a7319095f08198fa8babbe3c56e970b143528d22")),
-        ECC.secp256r1.getCurve().decodePoint(Helper.hexToBytes("0209e7fd41dfb5c2f8dc72eb30358ac100ea8c72da18847befe06eade68cebfcb9")),
-        ECC.secp256r1.getCurve().decodePoint(Helper.hexToBytes("039dafd8571a641058ccc832c5e2111ea39b09c0bde36050914384f7a48bce9bf9")),
-        ECC.secp256r1.getCurve().decodePoint(Helper.hexToBytes("038dddc06ce687677a53d54f096d2591ba2302068cf123c1f2d75c2dddc5425579")),
-        ECC.secp256r1.getCurve().decodePoint(Helper.hexToBytes("02d02b1873a0863cd042cc717da31cea0d7cf9db32b74d4c72c01b0011503e2e22")),
-        ECC.secp256r1.getCurve().decodePoint(Helper.hexToBytes("034ff5ceeac41acf22cd5ed2da17a6df4dd8358fcb2bfb1a43208ad0feaab2746b")),
-    };
+    public static final ECPoint[] STANDBY_MINERS = new ECPoint[STANDBY_MINER_VALUE.length];
+	static {
+		for (int i = 0; i < STANDBY_MINER_VALUE.length; i++) {
+			STANDBY_MINERS[i] = ECC.secp256r1.getCurve().decodePoint(Helper.hexToBytes(STANDBY_MINER_VALUE[i]));
+		}
+	}
 
     /**
      *  小蚁股
